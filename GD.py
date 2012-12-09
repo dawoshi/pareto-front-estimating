@@ -3,6 +3,14 @@
 from os import sys
 from math import sqrt
 
+if len(sys.argv) < 3:
+	print "Too less arguments, give filename as first arg, problemname as second. You can also give step of search as 3rd arg"
+	exit()
+
+step = 0.00001
+if len(sys.argv) == 4:
+	step = float(sys.argv[3])
+
 file_with_archive = sys.argv[1]
 problem = sys.argv[2]
 
@@ -36,7 +44,7 @@ def min_dist_to_dot(f1s, f2s, step):						# Функция для определ
 
 min_dists = []
 for f_vector in f_vectors:
-	min_dist_for_dot1 = min_dist_to_dot(f_vector[0], f_vector[1], 0.00001)
+	min_dist_for_dot1 = min_dist_to_dot(f_vector[0], f_vector[1], step)
 	min_dists.append(min_dist_for_dot1)
 
 summ = 0
