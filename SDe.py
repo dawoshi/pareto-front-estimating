@@ -3,6 +3,14 @@
 from os import sys
 from math import sqrt
 
+if len(sys.argv) < 3:
+	print "Too less arguments, give filename as first arg, problemname as second. You can also give step of search as 3rd arg"
+	exit()
+
+step = 0.00001
+if len(sys.argv) == 4:
+	step = float(sys.argv[3])
+
 file_with_archive = sys.argv[1]
 problem = sys.argv[2]
 
@@ -23,10 +31,10 @@ x_vectors = read_from_file(file_with_archive)				# Вектора X, предс�
 f_vectors = get_F_from_X(x_vectors)							# Вектора F, представляющие собой множество Парето
 archive_potency = len(f_vectors)
 
-def byWhatEOneVectorDominateOther(vector1, vector2):			# vector1 dominate vector2; used in SpacingDistributionInE indicator
-	e1 = vector1[0] / float(vector2[0])			# e in first component
-	e2 = vector1[1] / float(vector2[1])			# e in first component
-	e = max(e1, e2)							# taking max because min don't satisfy other inequality
+def byWhatEOneVectorDominateOther(vector1, vector2):			# vector1 доминирует vector2
+	e1 = vector1[0] / float(vector2[0])			# e для первой компоненты
+	e2 = vector1[1] / float(vector2[1])			# e для второй компоненты
+	e = max(e1, e2)							    # Берем максимум, т.к. минимум не удовлетворяет другим неравенствам
 	return e
 
 # Spacing Distribution In E indicator
@@ -40,6 +48,6 @@ for Fj_vector in f_vectors:
 		e = byWhatEOneVectorDominateOther(Fj_vector, Fk_vector)
 		if e < min_e:
 			min_e = e
-		f1 += 0.0001
+		f1 += step
 result = min_e
 print "Problem: ", problem, " I_SDe = %f" % result
