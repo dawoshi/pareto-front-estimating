@@ -3,6 +3,18 @@
 from os import sys
 from math import sqrt
 
+if len(sys.argv) < 3:
+	print "Too less arguments, give filename as first arg, problemname as second. You can also give step of search as 3rd arg and e of error as 4rd arg"
+	exit()
+
+step = 0.00001
+if len(sys.argv) > 3:
+	step = float(sys.argv[3])
+
+e = 0.1
+if len(sys.argv) == 5:
+	step = float(sys.argv[4])
+
 file_with_archive = sys.argv[1]
 problem = sys.argv[2]
 
@@ -35,10 +47,9 @@ def min_dist_to_dot(f1s, f2s, step):
 	return min_dist
 
 # Error Ratio indicator
-e = 0.1
 summ = 0
 for f_vector in f_vectors:
-	d = min_dist_to_dot(f_vector[0], f_vector[1], 0.00001)		# minimum distance to front
+	d = min_dist_to_dot(f_vector[0], f_vector[1], step)		# minimum distance to front
 	if d > e:
 		summ += 1
 result = summ / float(archive_potency)
