@@ -3,6 +3,14 @@
 from os import sys
 from math import sqrt
 
+if len(sys.argv) < 3:
+	print "Too less arguments, give filename as first arg, problemname as second. You can also give step of search as 3rd arg"
+	exit()
+
+step = 0.00001
+if len(sys.argv) == 4:
+	step = float(sys.argv[3])
+
 file_with_archive = sys.argv[1]
 problem = sys.argv[2]
 
@@ -44,6 +52,6 @@ for Fj_vector in f_vectors:
 		e = byWhatEPlusOneVectorDominateOther(Fj_vector, Fk_vector)
 		if e < min_e:
 			min_e = e
-		f1 += 0.0001
+		f1 += step
 result = min_e
 print "Problem: ", problem, " I_SDe+ = %f" % result
